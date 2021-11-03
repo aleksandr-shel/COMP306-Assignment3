@@ -1,16 +1,12 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
+﻿@model List<Amazon.S3.Model.S3Object>;
 
 
 <div>
 
     <ul>
-        <li>
-
-        </li>
+        @foreach(var obj in Model)
+            {
+                <li><a href="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key">@obj.Key</a></li>
+            }
     </ul>
 </div>

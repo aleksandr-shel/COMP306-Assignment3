@@ -9,6 +9,7 @@ namespace Group31_COMP306_Assignment3.Models
     {
         public int UserId { get; set; }
         public string MovieTitle { get; set; }
+        public int MyProperty { get; set; }
         public DateTime Time { get; set; }
     }
 }
