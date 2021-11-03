@@ -1,4 +1,4 @@
-﻿using Group31_COMP306_Assignment3.Models;
+using Group31_COMP306_Assignment3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,21 +9,16 @@ using System.Threading.Tasks;
 
 namespace Group31_COMP306_Assignment3.Controllers
 {
-    public class HomeController : Controller
+    public class UserController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<UserController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
+        public IActionResult Registration()
         {
             return View();
         }
