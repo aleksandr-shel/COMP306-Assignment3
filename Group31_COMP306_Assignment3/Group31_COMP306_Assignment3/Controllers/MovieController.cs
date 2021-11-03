@@ -19,7 +19,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         public MovieController()
         {
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> List()
         {
             List<S3Object> list = new List<S3Object>();
             ListObjectsV2Request request = new ListObjectsV2Request();
@@ -35,6 +35,11 @@ namespace Group31_COMP306_Assignment3.Controllers
             
             return View(list);
 
+        }
+
+        public IActionResult Page(string key)
+        {
+            return View("Page",key);
         }
 
         public IActionResult UploadMovie()
