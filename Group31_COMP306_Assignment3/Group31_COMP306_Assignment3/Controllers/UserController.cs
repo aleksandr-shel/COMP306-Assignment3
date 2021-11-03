@@ -12,14 +12,29 @@ namespace Group31_COMP306_Assignment3.Controllers
     public class UserController : Controller
     {
         private readonly ILogger<UserController> _logger;
-
-        public UserController(ILogger<UserController> logger)
+        private COMP306LAB3Context _context;
+        public UserController(COMP306LAB3Context context)
         {
-            _logger = logger;
+            _context = context;
         }
-
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult Registration()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index),"Home");
+            }
             return View();
         }
 

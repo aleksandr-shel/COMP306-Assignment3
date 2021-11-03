@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Group31_COMP306_Assignment3.Models;
 
 namespace Group31_COMP306_Assignment3
 {
@@ -24,6 +26,7 @@ namespace Group31_COMP306_Assignment3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<COMP306LAB3Context>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection2RDS")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
