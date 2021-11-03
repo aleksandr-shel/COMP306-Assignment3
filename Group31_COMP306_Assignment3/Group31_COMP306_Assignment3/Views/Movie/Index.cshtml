@@ -6,7 +6,10 @@
     <ul>
         @foreach(var obj in Model)
             {
-                <li><a href="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key">@obj.Key</a></li>
+                <li>
+                    <a href="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key">@obj.Key</a> 
+                    <a href="/movie/delete/@obj.Key">Delete</a>
+                </li>
             }
     </ul>
 </div>

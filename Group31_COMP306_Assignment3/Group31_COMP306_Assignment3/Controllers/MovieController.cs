@@ -23,7 +23,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         {
             List<S3Object> list = new List<S3Object>();
             ListObjectsV2Request request = new ListObjectsV2Request();
-            request.BucketName = "moviescomp306";
+            request.BucketName = bucketName;
             ListObjectsV2Response response;
             do
             {
@@ -59,5 +59,28 @@ namespace Group31_COMP306_Assignment3.Controllers
             return View();
         }
 
+        [Route("/movie/delete/{key}")]
+        public async Task<IActionResult> Delete(string key)
+        {
+            try
+            {
+                DeleteObjectRequest deleteRequest = new DeleteObjectRequest()
+                {
+                    BucketName = bucketName,
+                    Key = key
+                };
+                DeleteObjectResponse response = await s3Client.DeleteObjectAsync(deleteRequest);
+            }
+            catch (AmazonS3Exception e)
+            {
+                return RedirectToAction(nameof(Error));
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }
