@@ -29,8 +29,27 @@ namespace Group31_COMP306_Assignment3.Controllers
         {
 
             return View();
-
         }
+
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            User userLoggedIn = _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
+            
+            if (userLoggedIn != null)
+            {
+                signedIn = true;
+            }
+            
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
+        public IActionResult Logout()
+        {
+            signedIn = false;
+            return RedirectToAction(nameof(Index), "Home");
+        }
+
 
         [HttpPost]
         public IActionResult Register(User user)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Group31_COMP306_Assignment3.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -20,6 +20,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 
         public IActionResult Index()
         {
+            ViewData["signedIn"] = signedIn;
             return View();
         }
 
