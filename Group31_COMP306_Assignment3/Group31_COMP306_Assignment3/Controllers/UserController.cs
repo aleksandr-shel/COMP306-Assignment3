@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace Group31_COMP306_Assignment3.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        private readonly ILogger<UserController> _logger;
         private COMP306LAB3Context _context;
         public UserController(COMP306LAB3Context context)
         {
@@ -24,6 +23,13 @@ namespace Group31_COMP306_Assignment3.Controllers
         public IActionResult Registration()
         {
             return View();
+        }
+
+        public IActionResult Login()
+        {
+
+            return View();
+
         }
 
         [HttpPost]
