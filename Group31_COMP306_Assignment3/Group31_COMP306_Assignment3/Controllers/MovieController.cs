@@ -1,7 +1,13 @@
-﻿using Amazon.S3.Model;
+﻿using Amazon;
+using Amazon.Runtime;
+using Amazon.S3;
+using Amazon.S3.Model;
+using Group31_COMP306_Assignment3.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +15,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 {
     public class MovieController : BaseController
     {
+        private string bucketName = "moviescomp306";
         public MovieController()
         {
         }
@@ -29,5 +36,26 @@ namespace Group31_COMP306_Assignment3.Controllers
             return View(list);
 
         }
+
+        public IActionResult UploadMovie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadMovie(FileUploadForm uploadMovie)
+        {
+
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await uploadMovie.UploadFile.CopyToAsync(memoryStream);
+
+                await S3Upload.UploadFileAsync(memoryStream, bucketName, "KEY_NAME");
+            }
+
+            return View();
+        }
+
     }
 }
