@@ -7,12 +7,16 @@
     const movieTitle = document.querySelector("input[name='movieTitle']");
     const userId = document.querySelector("input[name='userId']");
 
-    
 
-
+    let value;
     let res = fetch(`/rating/getrating?movieTitle=${movieTitle.value}&userId=${userId.value}`).then(response => {
         return response.json();
+    })
+    res.then(data => {
+        inputRating.forEach(x => {
+            if (x.value == data.value) {
+                x.checked = true;
+            }
+        })
     });
-
-    console.log(res);
 })()
