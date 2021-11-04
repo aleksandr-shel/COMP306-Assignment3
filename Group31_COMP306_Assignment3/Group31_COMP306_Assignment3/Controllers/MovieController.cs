@@ -57,6 +57,8 @@ namespace Group31_COMP306_Assignment3.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadMovie(FileUploadForm uploadMovie)
         {
+            ViewData["signedIn"] = signedIn;
+
             using (var memoryStream = new MemoryStream())
             {
                 await uploadMovie.UploadFile.CopyToAsync(memoryStream);
