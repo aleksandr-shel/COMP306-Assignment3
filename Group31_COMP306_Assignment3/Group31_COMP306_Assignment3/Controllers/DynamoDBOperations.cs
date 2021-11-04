@@ -198,6 +198,13 @@ namespace Group31_COMP306_Assignment3.Controllers
             await context.SaveAsync<Comment>(comment);
         }
 
+        public async Task DeleteComment(string movieTitle, string username, string content, string time)
+        {
+            await CreateCommentsTable();
+            Comment comment = new Comment(movieTitle, username, content, time);
+            await context.DeleteAsync<Comment>(comment);
+        }
+
         public async Task<List<Comment>> GetMovieComments(string movieTitle){
             var search = context.FromQueryAsync<Comment>(new Amazon.DynamoDBv2.DocumentModel.QueryOperationConfig()
             {
