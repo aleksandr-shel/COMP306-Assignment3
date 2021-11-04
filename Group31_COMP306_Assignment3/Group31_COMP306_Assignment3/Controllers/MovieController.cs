@@ -45,9 +45,11 @@ namespace Group31_COMP306_Assignment3.Controllers
 
             var movieObject = await dBOperations.GetMovie(key);
 
+            var ratings = await dBOperations.GetMovieRatings(key);
+
             //User user = _context.Users.Find(userId);
             string username = loggedUser == null ? "anonim" : loggedUser.Username;
-            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments, movieObject[0]);
+            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments, movieObject[0], ratings);
             moviePageViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
 
 

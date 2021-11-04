@@ -16,16 +16,20 @@ namespace Group31_COMP306_Assignment3.Models
 
         public Movie MovieObject { get; set; }
 
+        public List<Rating> Ratings { get; set; }
+
         public MoviePageViewModel(string movieTitle, string username)
         {
             MovieTitle = movieTitle;
             Username = username;
         }
 
-        public MoviePageViewModel(string movieTitle, string username, List<Comment> comments, Movie movieObject) : this(movieTitle, username)
+        public MoviePageViewModel(string movieTitle, string username, List<Comment> comments, Movie movieObject, List<Rating> ratings) 
+                                        : this(movieTitle, username)
         {
             Comments = comments;
             MovieObject = movieObject;
+            Ratings = ratings;
         }
 
         public MoviePageViewModel(string movieTitle, string username, List<Comment> comments, int userId)

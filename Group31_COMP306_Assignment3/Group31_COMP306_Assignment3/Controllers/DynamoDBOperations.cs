@@ -227,6 +227,19 @@ namespace Group31_COMP306_Assignment3.Controllers
             List<Movie> movieObject = searchResponse.ToList();
             return movieObject;
         }
+
+        public async Task<List<Rating>> GetMovieRatings(string movieTitle)
+        {
+            var search = context.FromQueryAsync<Rating>(new Amazon.DynamoDBv2.DocumentModel.QueryOperationConfig()
+            {
+                Filter = new Amazon.DynamoDBv2.DocumentModel.QueryFilter("MovieTitle", Amazon.DynamoDBv2.DocumentModel.QueryOperator.Equal, movieTitle)
+            });
+
+            var searchResponse = await search.GetRemainingAsync();
+            List<Rating> ratings = searchResponse.ToList();
+            return ratings;
+        }
+
         public async Task CreateRating(string movieTitle, int userId, int value)
         {
             await CreateRatingsTable();
