@@ -3,6 +3,8 @@
 
 @model MoviePageViewModel
 
+<link href="~/css/comments.css" rel="stylesheet" type="text/css" />
+
 <div class="movie-container">
     <video src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@Model.MovieTitle" controls></video>
 
@@ -32,12 +34,13 @@
         <input type="submit" value="Submit" />
     </form>
 
+    <br />
 
     @{ if (Model.Comments.Count > 0)
         {
             foreach (Comment comment in Model.Comments)
             {
-                <form asp-action="Edit" asp-controller="Comment" method="post">
+                <form asp-action="Edit" asp-controller="Comment" method="post" id="allComments">
                     <input type="hidden" name="movieTitle" value="@comment.MovieTitle" />
                     <input type="hidden" name="username" value="@comment.Username" />
                     <input type="hidden" name="time" value="@comment.Time" />
