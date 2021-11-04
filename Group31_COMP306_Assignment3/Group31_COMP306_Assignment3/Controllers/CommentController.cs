@@ -26,5 +26,16 @@ namespace Group31_COMP306_Assignment3.Controllers
 
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string username, String movieTitle, String comment, string time)
+        {
+            double daysPassedAfterCommenting = (DateTime.Now - Convert.ToDateTime(time)).TotalDays;
+
+            if (loggedUser?.Username == username && daysPassedAfterCommenting < 1)
+                await dBOperations.DeleteComment(movieTitle, username, comment, time);
+
+            return RedirectToAction("Page", "Movie", new { key = movieTitle });
+        }
     }
 }

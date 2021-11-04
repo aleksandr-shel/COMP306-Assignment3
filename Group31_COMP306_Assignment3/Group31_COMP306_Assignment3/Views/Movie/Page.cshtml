@@ -1,7 +1,4 @@
-﻿
-
-
-@model MoviePageViewModel
+﻿@model MoviePageViewModel
 
 <link href="~/css/comments.css" rel="stylesheet" type="text/css" />
 
@@ -42,7 +39,7 @@
         {
             foreach (Comment comment in Model.Comments)
             {
-                <form asp-action="Edit" asp-controller="Comment" method="post" id="allComments">
+                <form method="post" id="allComments">
                     <input type="hidden" name="movieTitle" value="@comment.MovieTitle" />
                     <input type="hidden" name="username" value="@comment.Username" />
                     <input type="hidden" name="time" value="@comment.Time" />
@@ -56,7 +53,9 @@
                     <br />
 
                     <div>
-                        <input type="submit" value="Edit" />
+                        <input asp-action="Edit" asp-controller="Comment"  type="submit" value="Edit" />
+
+                        <input asp-action="Delete" asp-controller="Comment"  type="submit" value="Delete" />
                     </div>
                 </form>
 
