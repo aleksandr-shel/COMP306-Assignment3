@@ -216,6 +216,18 @@ namespace Group31_COMP306_Assignment3.Controllers
             return comments;
         }
 
+        public async Task<List<Movie>> GetMovie(string movieTitle)
+        {
+            var search = context.FromQueryAsync<Movie>(new Amazon.DynamoDBv2.DocumentModel.QueryOperationConfig()
+            {
+                Filter = new Amazon.DynamoDBv2.DocumentModel.QueryFilter("MovieTitle", Amazon.DynamoDBv2.DocumentModel.QueryOperator.Equal, movieTitle)
+            });
+
+            var searchResponse = await search.GetRemainingAsync();
+            List<Movie> movieObject = searchResponse.ToList();
+            return movieObject;
+        }
+
         public async Task<bool> IsThereTable(string tablename)
         {
             ListTablesResponse response = await clientDynamoDB.ListTablesAsync();
