@@ -45,6 +45,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             //User user = _context.Users.Find(userId);
             string username = loggedUser == null ? "anonim" : loggedUser.Username;
             MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments);
+            moviePageViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
             return View("Page",moviePageViewModel);
         }
 

@@ -9,11 +9,20 @@ namespace Group31_COMP306_Assignment3.Controllers
     public class RatingController : BaseController
     {
         [HttpPost]
-        public async Task AddRating(int userId, string movieTitle, int rate)
+        public async Task<IActionResult> AddRating(int userId, string movieTitle, int rate)
         {
-            Temporary temporary = new Temporary();
-            await temporary.CreateRating(movieTitle, userId, rate);
-            RedirectToAction("Page", "Movie", new { key = movieTitle });
+            if (userId != 0)
+            {
+                Temporary temporary = new Temporary();
+                await temporary.CreateRating(movieTitle, userId, rate);
+            }
+            return RedirectToAction("Page", "Movie", new { key = movieTitle });
+        }
+
+        [HttpGet]
+        public async Task<int> GetRating(int userId, string movieTitle)
+        {
+            return 2;
         }
     }
 }

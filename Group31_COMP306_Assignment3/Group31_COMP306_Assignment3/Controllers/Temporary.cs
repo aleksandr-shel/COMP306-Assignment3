@@ -8,8 +8,6 @@ namespace Group31_COMP306_Assignment3.Controllers
 {
     public class Temporary : DynamoDBOperations
     {
-
-
         public async Task CreateRating(string movieTitle, int userId, int value)
         {
             await CreateRatingsTable();
