@@ -13,8 +13,8 @@ namespace Group31_COMP306_Assignment3.Controllers
         {
             if (userId != 0)
             {
-                Temporary temporary = new Temporary();
-                await temporary.CreateRating(movieTitle, userId, rate);
+                
+                await dBOperations.CreateRating(movieTitle, userId, rate);
             }
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
@@ -22,12 +22,11 @@ namespace Group31_COMP306_Assignment3.Controllers
         [HttpGet]
         public async Task<Models.Rating> GetRating(int userId, string movieTitle)
         {
-            //if (userId == 0)
-            //{
-            //    return null;
-            //} 
-            Temporary temporary = new Temporary();
-            return await temporary.GetRating(movieTitle, userId);
+            if (userId == 0)
+            {
+                return null;
+            }
+            return await dBOperations.GetRating(movieTitle, userId);
         }
     }
 }

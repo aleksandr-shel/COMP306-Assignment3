@@ -227,7 +227,17 @@ namespace Group31_COMP306_Assignment3.Controllers
             List<Movie> movieObject = searchResponse.ToList();
             return movieObject;
         }
+        public async Task CreateRating(string movieTitle, int userId, int value)
+        {
+            await CreateRatingsTable();
+            Rating rating = new Rating(movieTitle, userId, value);
+            await context.SaveAsync<Rating>(rating);
+        }
 
+        public async Task<Rating> GetRating(string movieTitle, int userId)
+        {
+            return await context.LoadAsync<Rating>(movieTitle, userId);
+        }
         public async Task<bool> IsThereTable(string tablename)
         {
             ListTablesResponse response = await clientDynamoDB.ListTablesAsync();
