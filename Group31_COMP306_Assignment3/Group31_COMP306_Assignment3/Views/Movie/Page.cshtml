@@ -6,10 +6,12 @@
 <link href="~/css/comments.css" rel="stylesheet" type="text/css" />
 
 <div class="movie-container">
-    <video src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@Model.MovieTitle" controls></video>
+    <video src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@Model.MovieTitle" type="video/mp4" controls></video>
 
     <div>
-        <form class="rate" action="/rating/rate/" method="post">
+        <form class="rate" asp-action="AddRating" asp-controller="Rating" method="post">
+            <input type="hidden" name="movieTitle" value="@Model.MovieTitle"/>
+            <input type="hidden" name="userId" value="@Model.UserId"/>
             <input type="radio" id="star5" name="rate" value="5" />
             <label for="star5" title="text">5 stars</label>
             <input type="radio" id="star4" name="rate" value="4" />
@@ -20,7 +22,7 @@
             <label for="star2" title="text">2 stars</label>
             <input type="radio" id="star1" name="rate" value="1" />
             <label for="star1" title="text">1 star</label>
-            <input type="submit" value="Rate" />
+            <button type="submit"> Rate</button>
         </form>
     </div>
     <a href="/movie/delete/@Model.MovieTitle">Delete</a>
@@ -36,7 +38,7 @@
 
     <br />
 
-    @{ if (Model.Comments.Count > 0)
+    @{ if (Model.Comments != null)
         {
             foreach (Comment comment in Model.Comments)
             {

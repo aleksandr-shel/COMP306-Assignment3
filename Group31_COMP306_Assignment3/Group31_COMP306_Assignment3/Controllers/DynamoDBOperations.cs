@@ -13,7 +13,7 @@ namespace Group31_COMP306_Assignment3.Controllers
     public class DynamoDBOperations
     {
         AmazonDynamoDBClient clientDynamoDB;
-        DynamoDBContext context;
+        protected DynamoDBContext context;
         private static string accessKey = "AKIATVAQEU4Y2MEXAAH2";
         private static string secretKey = "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";
         public DynamoDBOperations()
