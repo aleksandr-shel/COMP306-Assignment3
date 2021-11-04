@@ -2,14 +2,19 @@
 
 
 <div>
-    <a asp-action="UploadMovie" asp-controller="Movie">Add a Movie</a>
-    <ul>
+    <a asp-action="UploadMovie" asp-controller="Movie">Upload a movie/video</a>
+    <div class="movie-list-container">
         @foreach(var obj in Model)
             {
-                <li>
-                    <a asp-action="Page" asp-controller="Movie" asp-route-key="@obj.Key">@obj.Key</a> 
+                <div class="grid-item">
+                    <a asp-action="Page" asp-controller="Movie" asp-route-key="@obj.Key">
+                        <h4>@obj.Key</h4>
+                        <video>
+                            <source src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key#t=0.1"/>
+                        </video>
+                    </a> 
                     <a href="/movie/delete/@obj.Key">Delete</a>
-                </li>
+                </div>
             }
-    </ul>
+    </div>
 </div>

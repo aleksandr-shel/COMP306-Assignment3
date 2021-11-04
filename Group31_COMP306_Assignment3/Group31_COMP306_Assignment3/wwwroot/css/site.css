@@ -73,11 +73,30 @@ body {
 .movie-container {
     margin:8px;
 }
-.movie-container video{
-    width:auto;
+.movie-container > video{
+    width:60%;
     height:auto;
 }
 
-.comment-section{
-
+.comment-section > div{
+    display:block;
+    padding: 6px 8px;
+    margin: 2px;
+    border: 1px solid black;
 }
+
+.movie-list-container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+}
+.movie-list-container .grid-item{
+    display:flex;
+    flex-direction:column;
+    padding: 6px 8px;
+}
+
+.movie-list-container > div > a > video {
+    width: 100%;
+    height: auto;
+}
+

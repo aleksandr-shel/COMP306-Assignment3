@@ -78,7 +78,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 return RedirectToAction(nameof(Error));
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(List));
         }
 
         public ActionResult Error()
