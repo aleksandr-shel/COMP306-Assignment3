@@ -61,9 +61,13 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 await uploadMovie.UploadFile.CopyToAsync(memoryStream);
 
-                string key = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
+                string key = Path.GetFileName(uploadMovie.UploadFile.FileName);
+
+                string movieTitle = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
 
                 await S3Upload.UploadFileAsync(memoryStream, bucketName, key);
+
+                await dBOperations.CreateMovieDescription(movieTitle, loggedUser.Id, "TEST DESCRIPTION");
             }
 
             return View();

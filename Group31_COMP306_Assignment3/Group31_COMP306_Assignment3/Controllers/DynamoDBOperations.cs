@@ -74,6 +74,7 @@ namespace Group31_COMP306_Assignment3.Controllers
                 Console.WriteLine(lee.Message);
             }
         }
+
         public async Task CreateRatingsTable()
         {
             if (await IsThereTable("Ratings"))
@@ -127,6 +128,67 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 Console.WriteLine(lee.Message);
             }
+        }
+
+        public async Task CreateMoviesTable()
+        {
+            if (await IsThereTable("Movies"))
+            {
+                return;
+            }
+            CreateTableRequest request = new CreateTableRequest
+            {
+                TableName = "Movies",
+                AttributeDefinitions = new List<AttributeDefinition>
+                {
+                    new AttributeDefinition
+                    {
+                        AttributeName="MovieTitle",
+                        AttributeType="S"
+                    },
+                    new AttributeDefinition
+                    {
+                        AttributeName="UserId",
+                        AttributeType="N"
+                    }
+                },
+                KeySchema = new List<KeySchemaElement>
+                {
+                    new KeySchemaElement{
+                        AttributeName="MovieTitle",
+                        KeyType="HASH"
+                    },
+                    new KeySchemaElement{
+                        AttributeName="UserId",
+                        KeyType="RANGE"
+                    }
+                },
+                BillingMode = BillingMode.PROVISIONED,
+                ProvisionedThroughput = new ProvisionedThroughput
+                {
+                    ReadCapacityUnits = 1,
+                    WriteCapacityUnits = 1
+                }
+            };
+            try
+            {
+                var response = await clientDynamoDB.CreateTableAsync(request);
+                if (response.HttpStatusCode == System.Net.HttpStatusCode.OK) Console.WriteLine("Table created");
+            }
+            catch (InternalServerErrorException iee)
+            {
+                Console.WriteLine(iee.Message);
+            }
+            catch (LimitExceededException lee)
+            {
+                Console.WriteLine(lee.Message);
+            }
+        }
+        public async Task CreateMovieDescription(string movieTitle, int userId, string description)
+        {
+            await CreateMoviesTable();
+            Movie movie = new Movie(movieTitle, userId, description);
+            await context.SaveAsync<Movie>(movie);
         }
 
         public async Task CreateComment(string movieTitle, string username, string content, string time = null)
