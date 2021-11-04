@@ -14,5 +14,10 @@ namespace Group31_COMP306_Assignment3.Controllers
             Rating rating = new Rating(movieTitle, userId, value);
             await context.SaveAsync<Rating>(rating);
         }
+
+        public async Task<Rating> GetRating(string movieTitle, int userId)
+        {
+            return await context.LoadAsync<Rating>(movieTitle, userId);
+        }
     }
 }

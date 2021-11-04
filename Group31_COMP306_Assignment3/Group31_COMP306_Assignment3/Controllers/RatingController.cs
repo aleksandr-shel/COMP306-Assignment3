@@ -20,9 +20,14 @@ namespace Group31_COMP306_Assignment3.Controllers
         }
 
         [HttpGet]
-        public async Task<int> GetRating(int userId, string movieTitle)
+        public async Task<Models.Rating> GetRating(int userId, string movieTitle)
         {
-            return 2;
+            //if (userId == 0)
+            //{
+            //    return null;
+            //} 
+            Temporary temporary = new Temporary();
+            return await temporary.GetRating(movieTitle, userId);
         }
     }
 }
