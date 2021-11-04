@@ -22,7 +22,7 @@ namespace Group31_COMP306_Assignment3.Models
         public Comment(string movieTitle, string userName, string content, string time = null)
         {
             MovieTitle = movieTitle;
-            Time = time ?? DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+            Time = time ?? DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
             Username = userName;
             Content = content;
         }
