@@ -19,17 +19,18 @@ namespace Group31_COMP306_Assignment3.Models
 
         public string Description{ get; set; }
 
-        public List<string> Actors { get; set; }
+        public string Director { get; set; }
 
         public Movie()
         {
         }
 
-        public Movie(string movieTitle, int userId, string description)
+        public Movie(string movieTitle, int userId, string description, string director)
         {
             MovieTitle = movieTitle;
             UserId = userId;
             Description = description;
+            Director = director;
         }
     }
 }

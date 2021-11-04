@@ -184,10 +184,10 @@ namespace Group31_COMP306_Assignment3.Controllers
                 Console.WriteLine(lee.Message);
             }
         }
-        public async Task CreateMovieDescription(string movieTitle, int userId, string description)
+        public async Task CreateMovieDescription(string movieTitle, int userId, string description, string director)
         {
             await CreateMoviesTable();
-            Movie movie = new Movie(movieTitle, userId, description);
+            Movie movie = new Movie(movieTitle, userId, description, director);
             await context.SaveAsync<Movie>(movie);
         }
 

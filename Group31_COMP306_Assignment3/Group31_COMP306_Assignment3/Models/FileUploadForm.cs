@@ -8,5 +8,13 @@ namespace Group31_COMP306_Assignment3.Models
         [Required]
         [Display(Name = "File")]
         public IFormFile UploadFile { get; set; }
+
+        [Required]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "Director")]
+        public string Director { get; set; }
     }
 }

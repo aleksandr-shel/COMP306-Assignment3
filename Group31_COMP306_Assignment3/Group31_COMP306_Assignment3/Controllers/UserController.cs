@@ -18,7 +18,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(Index), "Home");
         }
         public IActionResult Registration()
         {

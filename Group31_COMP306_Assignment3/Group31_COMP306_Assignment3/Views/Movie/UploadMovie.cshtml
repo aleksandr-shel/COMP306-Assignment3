@@ -1,14 +1,38 @@
 ﻿@model Group31_COMP306_Assignment3.Models.FileUploadForm
 
-<form enctype="multipart/form-data" method="post">
-    <dl>
-        <dt>
-            <label asp-for="UploadFile"></label>
-        </dt>
-        <dd>
-            <input asp-for="UploadFile" type="file"/>
-        </dd>
-    </dl>
-    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload">
-</form>
+@if ((bool)ViewData["signedIn"])
+{
+    <form enctype="multipart/form-data" method="post">
+        <dl>
+            <dt>
+                <label asp-for="UploadFile"></label>
+            </dt>
+            <dd>
+                <input asp-for="UploadFile" type="file" required />
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                <label asp-for="Description"></label>
+            </dt>
+            <dd>
+                <input asp-for="Description" type="text" required />
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                <label asp-for="Director"></label>
+            </dt>
+            <dd>
+                <input asp-for="Director" type="text" required />
+            </dd>
+        </dl>
+        <input asp-page-handler="Upload" class="btn" type="submit" value="Upload">
+    </form>
+}
+else
+{
+    <h3>You must log in to upload movies</h3>
+}
+
 
