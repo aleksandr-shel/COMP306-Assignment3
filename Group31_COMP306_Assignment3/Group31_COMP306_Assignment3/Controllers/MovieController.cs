@@ -16,9 +16,6 @@ namespace Group31_COMP306_Assignment3.Controllers
     public class MovieController : BaseController
     {
         private string bucketName = "moviescomp306";
-        public MovieController()
-        {
-        }
         public async Task<IActionResult> List()
         {
             List<S3Object> list = new List<S3Object>();
@@ -37,9 +34,11 @@ namespace Group31_COMP306_Assignment3.Controllers
 
         }
 
-        public IActionResult Page(string key)
+        public async Task<IActionResult> Page(string key)
         {
-            return View("Page",key);
+            List<Comment> comments = await dBOperations.GetMovieComments(key);
+            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, userId, comments);
+            return View("Page",moviePageViewModel);
         }
 
         public IActionResult UploadMovie()
@@ -50,7 +49,6 @@ namespace Group31_COMP306_Assignment3.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadMovie(FileUploadForm uploadMovie)
         {
-
 
             using (var memoryStream = new MemoryStream())
             {

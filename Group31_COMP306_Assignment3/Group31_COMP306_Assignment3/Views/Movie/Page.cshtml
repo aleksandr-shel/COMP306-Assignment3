@@ -1,23 +1,30 @@
 ﻿
 
 
-@model String
+@model MoviePageViewModel
 
 <div class="movie-container">
-    <video src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@Model" controls></video>
+    <video src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@Model.MovieTitle" controls></video>
 </div>
-
-<form>
-    <input type="text" />
-</form>
 <div class="comment-section">
-    <div>
-        <p>Comment....</p>
-    </div>
-    <div>
-        <p>Comment....</p>
-    </div>
-    <div>
-        <p>Comment....</p>
-    </div>
+    <form asp-action="Add" asp-controller="Comment" method="post">
+        <input type="hidden" name="movieTitle" value="@Model.MovieTitle" />
+        <input type="hidden" name="userId" value="@Model.UserId" />
+        <input type="text" name="comment" />
+        <input type="submit" value="Submit" />
+    </form>
+
+    @{ if (Model.Comments.Count > 0)
+        {
+            foreach (Comment comment in Model.Comments)
+            {
+                <div>
+                    <div>@comment.Time</div>
+                    <div>@comment.UserId</div>
+                    <div>@comment.Content</div>
+                </div>
+            }
+
+        }
+    }
 </div>

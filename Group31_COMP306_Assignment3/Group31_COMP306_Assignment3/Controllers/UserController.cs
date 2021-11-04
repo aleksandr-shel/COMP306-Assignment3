@@ -11,7 +11,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 {
     public class UserController : BaseController
     {
-        private COMP306LAB3Context _context;
+        private readonly COMP306LAB3Context _context;
         public UserController(COMP306LAB3Context context)
         {
             _context = context;
@@ -39,6 +39,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             if (userLoggedIn != null)
             {
                 signedIn = true;
+                userId = userLoggedIn.Id;
             }
             
             return RedirectToAction(nameof(Index), "Home");
@@ -47,6 +48,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         public IActionResult Logout()
         {
             signedIn = false;
+            userId = 0;
             return RedirectToAction(nameof(Index), "Home");
         }
 

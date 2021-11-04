@@ -11,6 +11,7 @@ namespace Group31_COMP306_Assignment3.Controllers
     public class BaseController : Controller
     {
         protected static AmazonS3Client s3Client;
+        protected static DynamoDBOperations dBOperations;
         protected static bool signedIn = false;
         protected static int userId = 0;
         protected static string accessKey = "AKIATVAQEU4Y2MEXAAH2";
@@ -18,6 +19,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 
         public BaseController()
         {
+            dBOperations = new DynamoDBOperations();
             s3Client = new AmazonS3Client(accessKey, secretKey, RegionEndpoint.CACentral1);
         }
     }
