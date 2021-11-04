@@ -19,7 +19,9 @@ namespace Group31_COMP306_Assignment3.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(string username, String movieTitle, String comment, string time)
         {
-            if (loggedUser?.Username == username)
+            double daysPassedAfterCommenting = (DateTime.Now - Convert.ToDateTime(time)).TotalDays;
+
+            if (loggedUser?.Username == username && daysPassedAfterCommenting < 1)
                 await dBOperations.CreateComment(movieTitle, username, comment, time);
 
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
