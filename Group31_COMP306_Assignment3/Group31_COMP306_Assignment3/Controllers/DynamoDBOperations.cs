@@ -75,10 +75,10 @@ namespace Group31_COMP306_Assignment3.Controllers
             }
         }
 
-        public async Task CreateComment(string movieTitle, string username, string content)
+        public async Task CreateComment(string movieTitle, string username, string content, string time = null)
         {
             await CreateCommentsTable();
-            Comment comment = new Comment(movieTitle, username, content);
+            Comment comment = new Comment(movieTitle, username, content, time);
             await context.SaveAsync<Comment>(comment);
         }
 

@@ -21,6 +21,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         public IActionResult Index()
         {
             ViewData["signedIn"] = signedIn;
+            ViewData["username"] = loggedUser?.Username;
             return View();
         }
 
