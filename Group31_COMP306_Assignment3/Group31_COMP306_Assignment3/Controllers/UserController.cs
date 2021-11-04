@@ -39,7 +39,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             if (userLoggedIn != null)
             {
                 signedIn = true;
-                userId = userLoggedIn.Id;
+                loggedUser = userLoggedIn;
             }
             
             return RedirectToAction(nameof(Index), "Home");
@@ -48,7 +48,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         public IActionResult Logout()
         {
             signedIn = false;
-            userId = 0;
+            loggedUser = null;
             return RedirectToAction(nameof(Index), "Home");
         }
 

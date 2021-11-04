@@ -16,6 +16,11 @@ namespace Group31_COMP306_Assignment3.Controllers
     public class MovieController : BaseController
     {
         private string bucketName = "moviescomp306";
+        private COMP306LAB3Context _context;
+        public MovieController(COMP306LAB3Context context)
+        {
+            _context = context;
+        }
         public async Task<IActionResult> List()
         {
             List<S3Object> list = new List<S3Object>();
@@ -37,7 +42,9 @@ namespace Group31_COMP306_Assignment3.Controllers
         public async Task<IActionResult> Page(string key)
         {
             List<Comment> comments = await dBOperations.GetMovieComments(key);
-            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, userId, comments);
+            //User user = _context.Users.Find(userId);
+            string username = loggedUser == null ? "anonim" : loggedUser.Username;
+            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments);
             return View("Page",moviePageViewModel);
         }
 

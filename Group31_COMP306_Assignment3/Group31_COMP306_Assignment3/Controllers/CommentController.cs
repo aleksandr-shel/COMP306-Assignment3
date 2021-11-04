@@ -10,9 +10,9 @@ namespace Group31_COMP306_Assignment3.Controllers
     {
 
         [HttpPost]
-        public async Task<IActionResult> Add(int userId, String movieTitle, String comment)
+        public async Task<IActionResult> Add(string username, String movieTitle, String comment)
         {
-            await dBOperations.CreateComment(movieTitle, userId, comment);
+            await dBOperations.CreateComment(movieTitle, username, comment);
             return RedirectToAction("Page", "Movie", new {key= movieTitle});
         }
     }

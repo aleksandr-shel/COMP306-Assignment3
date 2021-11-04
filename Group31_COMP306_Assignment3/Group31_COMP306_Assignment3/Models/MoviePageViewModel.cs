@@ -7,17 +7,19 @@ namespace Group31_COMP306_Assignment3.Models
 {
     public class MoviePageViewModel
     {
+        private COMP306LAB3Context context = new COMP306LAB3Context();
         public string MovieTitle { get; set; }
-        public int UserId { get; set; }
+        public string Username { get; set; }
 
         public List<Comment> Comments { get; set; }
-        public MoviePageViewModel(string movieTitle, int userId)
+
+        public MoviePageViewModel(string movieTitle, string username)
         {
             MovieTitle = movieTitle;
-            UserId = userId;
+            Username = username;
         }
 
-        public MoviePageViewModel(string movieTitle, int userId, List<Comment> comments) : this(movieTitle, userId)
+        public MoviePageViewModel(string movieTitle, string username, List<Comment> comments) : this(movieTitle, username)
         {
             Comments = comments;
         }

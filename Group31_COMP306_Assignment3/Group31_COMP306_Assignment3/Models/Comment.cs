@@ -12,18 +12,18 @@ namespace Group31_COMP306_Assignment3.Models
         [DynamoDBRangeKey]
         public string Time { get; set; }
 
-        public int UserId { get; set; }
+        public string Username{ get; set; }
         public string Content { get; set; }
 
         public Comment()
         {
         }
 
-        public Comment(string movieTitle, int userId, string content)
+        public Comment(string movieTitle, string userName, string content)
         {
             MovieTitle = movieTitle;
             Time = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
-            UserId = userId;
+            Username = userName;
             Content = content;
         }
     }

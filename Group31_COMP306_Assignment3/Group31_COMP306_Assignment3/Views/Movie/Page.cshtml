@@ -5,12 +5,29 @@
 
 <div class="movie-container">
     <video src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@Model.MovieTitle" controls></video>
+    
+    <div>
+        <form class="rate" action="/rating/rate/" method="post">
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+            <input type="submit" value="Rate"/>
+        </form>
+    </div>
     <a href="/movie/delete/@Model.MovieTitle">Delete</a>
 </div>
+
 <div class="comment-section">
     <form asp-action="Add" asp-controller="Comment" method="post">
         <input type="hidden" name="movieTitle" value="@Model.MovieTitle" />
-        <input type="hidden" name="userId" value="@Model.UserId" />
+        <input type="hidden" name="username" value="@Model.Username" />
         <input type="text" name="comment" />
         <input type="submit" value="Submit" />
     </form>
@@ -21,7 +38,7 @@
             {
                 <div>
                     <div>@comment.Time</div>
-                    <div>@comment.UserId</div>
+                    <div>@comment.Username</div>
                     <div>@comment.Content</div>
                 </div>
             }
