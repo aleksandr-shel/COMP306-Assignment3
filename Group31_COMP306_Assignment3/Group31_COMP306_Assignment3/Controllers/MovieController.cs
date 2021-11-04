@@ -34,7 +34,7 @@ namespace Group31_COMP306_Assignment3.Controllers
                 request.ContinuationToken = response.NextContinuationToken;
             } while (response.IsTruncated);
             response.S3Objects.ForEach(x => { list.Add(x); });
-            
+
             return View(list);
 
         }
@@ -42,11 +42,13 @@ namespace Group31_COMP306_Assignment3.Controllers
         public async Task<IActionResult> Page(string key)
         {
             List<Comment> comments = await dBOperations.GetMovieComments(key);
+
+            var movieObject = await dBOperations.GetMovie(key);
+
             //User user = _context.Users.Find(userId);
             string username = loggedUser == null ? "anonim" : loggedUser.Username;
-            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments);
-            moviePageViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
-            return View("Page",moviePageViewModel);
+            MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments, movieObject[0]);
+            return View("Page", moviePageViewModel);
         }
 
         public IActionResult UploadMovie()
@@ -66,14 +68,23 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 string key = Path.GetFileName(uploadMovie.UploadFile.FileName);
 
-                string movieTitle = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
+                //string movieTitle = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
 
                 await S3Upload.UploadFileAsync(memoryStream, bucketName, key);
 
-                await dBOperations.CreateMovieDescription(movieTitle, loggedUser.Id, uploadMovie.Description, uploadMovie.Director);
+                await dBOperations.CreateMovieDescription(key, loggedUser.Id, uploadMovie.Description, uploadMovie.Director);
             }
 
             return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditMovie(string movieTitle, int userId, string description, string director)
+        {
+            await dBOperations.CreateMovieDescription(movieTitle, userId, description, director);
+
+            return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
 
         [Route("/movie/delete/{key}")]
