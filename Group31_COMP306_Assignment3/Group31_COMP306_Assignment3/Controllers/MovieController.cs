@@ -82,7 +82,8 @@ namespace Group31_COMP306_Assignment3.Controllers
         [HttpPost]
         public async Task<IActionResult> EditMovie(string movieTitle, int userId, string description, string director)
         {
-            await dBOperations.CreateMovieDescription(movieTitle, userId, description, director);
+            if(loggedUser?.Id == userId)
+                await dBOperations.CreateMovieDescription(movieTitle, userId, description, director);
 
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
