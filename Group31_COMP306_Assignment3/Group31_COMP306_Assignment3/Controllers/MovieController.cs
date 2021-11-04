@@ -51,13 +51,13 @@ namespace Group31_COMP306_Assignment3.Controllers
 
         public IActionResult UploadMovie()
         {
+            ViewData["signedIn"] = signedIn;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> UploadMovie(FileUploadForm uploadMovie)
         {
-
             using (var memoryStream = new MemoryStream())
             {
                 await uploadMovie.UploadFile.CopyToAsync(memoryStream);
@@ -68,7 +68,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 await S3Upload.UploadFileAsync(memoryStream, bucketName, key);
 
-                await dBOperations.CreateMovieDescription(movieTitle, loggedUser.Id, "TEST DESCRIPTION");
+                await dBOperations.CreateMovieDescription(movieTitle, loggedUser.Id, uploadMovie.Description, uploadMovie.Director);
             }
 
             return View();
