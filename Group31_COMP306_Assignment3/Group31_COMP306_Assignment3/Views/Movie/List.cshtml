@@ -14,7 +14,24 @@
                             <source src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key#t=0.1"/>
                         </video>
                     </a> 
-                    <div> <p>@String.Format("{0:0.00}", Model.RatingsDict[obj.Key])</p></div>
+                    <div> Rating: @{ if (Model.RatingsDict[obj.Key] != 0) {
+                        <p>@String.Format("{0:0.00}", Model.RatingsDict[obj.Key])</p>
+                        }
+                    }</div>
+
+          <div class="rate">
+                        <input type="hidden" name="rating" value="@String.Format("{0:0}", Model.RatingsDict[obj.Key])"/>
+                        <input type="radio" id="star5 @obj.Key" name="rate @obj.Key" value="5"/>
+                        <label for="star5 @obj.Key" title="text">5 stars</label>
+                        <input type="radio" id="star4 @obj.Key" name="rate @obj.Key" value="4"/>
+                        <label for="star4 @obj.Key" title="text">4 stars</label>
+                        <input type="radio" id="star3 @obj.Key" name="rate @obj.Key" value="3"/>
+                        <label for="star3 @obj.Key" title="text">3 stars</label>
+                        <input type="radio" id="star2 @obj.Key" name="rate @obj.Key" value="2"/>
+                        <label for="star2 @obj.Key" title="text">2 stars</label>
+                        <input type="radio" id="star1 @obj.Key" name="rate @obj.Key" value="1"/>
+                        <label for="star1 @obj.Key" title="text">1 star</label>
+                    </div>
                     <a class="btn-outline-danger" href="/movie/delete/@obj.Key">Delete</a>
                 </div>
             }

@@ -43,8 +43,14 @@ namespace Group31_COMP306_Assignment3.Controllers
                 {
                     globalRating += rating.Value;
                 }
-                globalRating /= ratings.Count;
-                ratings_dict.Add(movieObj.Key, globalRating);
+                if (globalRating == 0)
+                {
+                    ratings_dict.Add(movieObj.Key, 0);
+                } else
+                {
+                    globalRating /= ratings.Count;
+                    ratings_dict.Add(movieObj.Key, globalRating);
+                }
             }
             movieListViewModel.RatingsDict = ratings_dict;
 
