@@ -34,7 +34,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             double daysPassedAfterCommenting = (DateTime.Now - Convert.ToDateTime(time)).TotalDays;
 
             if (loggedUser?.Username == username && daysPassedAfterCommenting < 1)
-                await dBOperations.DeleteComment(movieTitle, username, comment, time);
+                await dBOperations.DeleteComment(movieTitle, time);
 
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }

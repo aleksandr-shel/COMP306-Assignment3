@@ -198,11 +198,10 @@ namespace Group31_COMP306_Assignment3.Controllers
             await context.SaveAsync<Comment>(comment);
         }
 
-        public async Task DeleteComment(string movieTitle, string username, string content, string time)
+        public async Task DeleteComment(string movieTitle, string time)
         {
             await CreateCommentsTable();
-            Comment comment = new Comment(movieTitle, username, content, time);
-            await context.DeleteAsync<Comment>(comment);
+            await context.DeleteAsync<Comment>(movieTitle, time);
         }
 
         public async Task<List<Comment>> GetMovieComments(string movieTitle){
@@ -214,6 +213,15 @@ namespace Group31_COMP306_Assignment3.Controllers
             var searchResponse = await search.GetRemainingAsync();
             List<Comment> comments = searchResponse.ToList();
             return comments;
+        }
+
+        public async Task DeleteMovieComments(string movieTitle)
+        {
+            List<Comment> comments = await GetMovieComments(movieTitle);
+            foreach (var comment in comments)
+            {
+                await DeleteComment(comment.MovieTitle, comment.Time);
+            }
         }
 
         public async Task<List<Movie>> GetMovies(string movieTitle)
@@ -258,6 +266,15 @@ namespace Group31_COMP306_Assignment3.Controllers
             return ratings;
         }
 
+        public async Task DeleteMovieRatings(string movieTitle)
+        {
+            List<Rating> ratings = await GetMovieRatings(movieTitle);
+            foreach(var rating in ratings)
+            {
+                await DeleteRating(rating.MovieTitle, rating.UserId);
+            }
+        }
+
         public async Task CreateRating(string movieTitle, int userId, int value)
         {
             await CreateRatingsTable();
@@ -273,6 +290,11 @@ namespace Group31_COMP306_Assignment3.Controllers
         {
             ListTablesResponse response = await clientDynamoDB.ListTablesAsync();
             return response.TableNames.Contains(tablename);
+        }
+
+        public async Task DeleteRating(string movieTitle, int userId)
+        {
+            await context.DeleteAsync<Rating>(movieTitle, userId);
         }
     }
 }

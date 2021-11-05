@@ -177,6 +177,8 @@ namespace Group31_COMP306_Assignment3.Controllers
                         return RedirectToAction(nameof(Error));
                     }
                     await dBOperations.DeleteMovie(key, movie.UserId);
+                    await dBOperations.DeleteMovieComments(key);
+                    await dBOperations.DeleteMovieRatings(key);
 
                 }
             }
