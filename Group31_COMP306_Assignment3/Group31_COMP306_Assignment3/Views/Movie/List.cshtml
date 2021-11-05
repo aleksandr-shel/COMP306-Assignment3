@@ -2,7 +2,8 @@
 
 
 <div>
-    <a asp-action="UploadMovie" asp-controller="Movie">Upload a movie/video</a>
+    <a asp-action="UploadMovie" class="btn-outline-primary btn-sm" asp-controller="Movie">Upload a movie/video</a>
+    <button class="btn-info" id="sortByRating"> Sort by Rating</button>
     <div class="movie-list-container">
         @foreach(var obj in Model.ListOfMovies)
             {
@@ -13,9 +14,11 @@
                             <source src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key#t=0.1"/>
                         </video>
                     </a> 
-                    <div> <p>@Model.RatingsDict[obj.Key]</p></div>
-                    <a href="/movie/delete/@obj.Key">Delete</a>
+                    <div> <p>@String.Format("{0:0.00}", Model.RatingsDict[obj.Key])</p></div>
+                    <a class="btn-outline-danger" href="/movie/delete/@obj.Key">Delete</a>
                 </div>
             }
     </div>
 </div>
+
+<script src="~/js/MovieList.js" asp-append-version="true"></script>

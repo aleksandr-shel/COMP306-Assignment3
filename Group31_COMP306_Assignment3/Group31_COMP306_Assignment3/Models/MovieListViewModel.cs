@@ -10,5 +10,6 @@ namespace Group31_COMP306_Assignment3.Models
     {
         public List<S3Object> ListOfMovies { get; set; }
         public Dictionary<String, double> RatingsDict { get; set; }
+
     }
 }

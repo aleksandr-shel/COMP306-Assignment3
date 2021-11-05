@@ -8,7 +8,6 @@
     const userId = document.querySelector("input[name='userId']");
 
 
-    let value;
     let res = fetch(`/rating/getrating?movieTitle=${movieTitle.value}&userId=${userId.value}`).then(response => {
         return response.json();
     })

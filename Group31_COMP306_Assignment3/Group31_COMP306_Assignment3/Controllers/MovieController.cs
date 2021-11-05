@@ -49,7 +49,42 @@ namespace Group31_COMP306_Assignment3.Controllers
             movieListViewModel.RatingsDict = ratings_dict;
 
             return View(movieListViewModel);
+        }
+        [HttpGet]
+        public async Task<MovieListViewModel> SortedList(string order)
+        {
+            MovieListViewModel movieListViewModel = new MovieListViewModel();
+            ListObjectsV2Request request = new ListObjectsV2Request();
+            request.BucketName = bucketName;
+            ListObjectsV2Response response;
+            do
+            {
+                response = await s3Client.ListObjectsV2Async(request);
 
+                request.ContinuationToken = response.NextContinuationToken;
+            } while (response.IsTruncated);
+            movieListViewModel.ListOfMovies = response.S3Objects;
+            Dictionary<string, double> ratings_dict = new Dictionary<string, double>();
+            foreach (var movieObj in movieListViewModel.ListOfMovies)
+            {
+                List<Rating> ratings = await dBOperations.GetMovieRatings(movieObj.Key);
+                double globalRating = 0;
+                foreach (var rating in ratings)
+                {
+                    globalRating += rating.Value;
+                }
+                globalRating /= ratings.Count;
+                ratings_dict.Add(movieObj.Key, globalRating);
+            }
+            if (order.Equals("ascending"))
+            {
+                movieListViewModel.RatingsDict = ratings_dict.OrderBy(x => x.Value).ToDictionary(x=>x.Key, x=>x.Value);
+            } else
+            {
+                movieListViewModel.RatingsDict = ratings_dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            }
+
+            return movieListViewModel;
         }
 
         public async Task<IActionResult> Page(string key)

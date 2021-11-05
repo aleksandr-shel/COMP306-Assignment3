@@ -22,7 +22,7 @@
                 <label for="star2" title="text">2 stars</label>
                 <input type="radio" id="star1" name="rate" value="1" />
                 <label for="star1" title="text">1 star</label>
-                <button type="submit"> Rate</button>
+                <button style="float:right" type="submit"> Rate</button>
             </form>
         </div>
         <div>
@@ -38,7 +38,7 @@
 
                     globalRating /= numberRatings;
 
-                    <p>Global rating: @globalRating</p>
+                        <p>Global rating: @String.Format("{0:0.00}", globalRating)</p>
                 }
             }
         </div>
@@ -61,7 +61,7 @@
         </form>
     </div>
 
-    <a href="/movie/delete/@Model.MovieTitle">Delete</a>
+    <a class="btn-outline-danger" href="/movie/delete/@Model.MovieTitle">Delete</a>
     <br /><br />
 
 </div>
@@ -71,7 +71,7 @@
         <input type="hidden" name="movieTitle" value="@Model.MovieTitle" />
         <input type="hidden" name="username" value="@Model.Username" />
         <input type="text" placeholder="Comment" name="comment" />
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Post" />
     </form>
 
     <br />
