@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Group31_COMP306_Assignment3.Models;
+using Microsoft.Data.SqlClient;
 
 namespace Group31_COMP306_Assignment3
 {
@@ -26,7 +27,13 @@ namespace Group31_COMP306_Assignment3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<COMP306LAB3Context>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection2RDS")));
+            //services.AddDbContext<COMP306LAB3Context>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection2RDS")));
+
+            var builder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("Connection2RDS"));
+            builder.UserID = Configuration["DbUserName"];
+            builder.Password = Configuration["DbPassword"];
+            var connection = builder.ConnectionString;
+            services.AddDbContext<COMP306LAB3Context>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

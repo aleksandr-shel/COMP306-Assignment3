@@ -39,55 +39,6 @@ namespace Group31_COMP306_Assignment3
             }
         }
 
-        //code to browse through the system and find files
-        /*private void BrowseSysem()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            var result = openFileDialog.ShowDialog();
-
-            if (result != null)
-            {
-                file = openFileDialog.FileName;
-
-                try
-                {
-                    string allText = File.ReadAllText(file);
-                    FilePathText.Text = file;
-                    FilePathText.Text = Path.GetFileName(Path.GetDirectoryName(file));
-                }
-                catch (Exception exception)
-                {
-                    //MessageBox.Show($"{exception}");
-                }
-            }
-        }*/
-
-        /*private async void UploadMovie()
-        {
-            //get file path
-            string filePath = FilePathText.Text;
-
-            if (bucketName.Length > 0 && bucketName != null && filePath != null && filePath.Length > 0)
-            {
-                string key = Path.GetFileName(filePath);
-
-                //code to upload a file (documentation)
-                try
-                {
-                    AccessAppSettingsFile();
-
-                    using AmazonS3Client s3Client = new AmazonS3Client(credentials, RegionEndpoint.USEast1);
-                    var transferUtility = new TransferUtility(s3Client);
-
-                    await transferUtility.UploadAsync(filePath, bucketName, key);
-                }
-                catch (Exception exception)
-                {
-                    //MessageBox.Show($"{exception}");
-                }
-            }
-        }*/
-
         //code from the given ppt presentation to access AppSetting.json
         private void AccessAppSettingsFile()
         {
