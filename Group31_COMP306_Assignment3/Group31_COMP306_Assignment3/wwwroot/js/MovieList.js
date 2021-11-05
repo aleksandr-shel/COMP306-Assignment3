@@ -37,7 +37,6 @@
                         <input type="radio" id="star1 ${key}" name="rate ${key}" value="1" disabled/>
                         <label for="star1 ${key}" title="text">1 star</label>
                     </div>
-                    <a class="btn-outline-danger" href="/movie/delete/${key}">Delete</a>
                 `;
                 movieListContainer.appendChild(div);
                 putStars();

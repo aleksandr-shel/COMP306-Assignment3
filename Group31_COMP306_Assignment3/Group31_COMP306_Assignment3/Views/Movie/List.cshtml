@@ -32,8 +32,7 @@
                         <input type="radio" id="star1 @obj.Key" name="rate @obj.Key" value="1" disabled/>
                         <label for="star1 @obj.Key" title="text">1 star</label>
                     </div>
-                    @if (Model.UserId == Model.MoviesDict[obj.Key].UserId)
-                    { <a class="btn-outline-danger" href="/movie/delete?key=@obj.Key&userid=@Model.MoviesDict[obj.Key].UserId">Delete</a>}
+                    
 
                 </div>
             }
