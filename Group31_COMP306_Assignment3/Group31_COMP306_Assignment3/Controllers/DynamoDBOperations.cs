@@ -254,13 +254,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         public async Task<bool> IsThereTable(string tablename)
         {
             ListTablesResponse response = await clientDynamoDB.ListTablesAsync();
-            if (response.TableNames.Contains(tablename))
-            {
-                return true;
-            } else
-            {
-                return false;
-            }
+            return response.TableNames.Contains(tablename);
         }
     }
 }

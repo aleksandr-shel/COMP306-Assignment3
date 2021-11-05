@@ -1,10 +1,10 @@
-﻿@model List<Amazon.S3.Model.S3Object>;
+﻿@model MovieListViewModel;
 
 
 <div>
     <a asp-action="UploadMovie" asp-controller="Movie">Upload a movie/video</a>
     <div class="movie-list-container">
-        @foreach(var obj in Model)
+        @foreach(var obj in Model.ListOfMovies)
             {
                 <div class="grid-item">
                     <a asp-action="Page" asp-controller="Movie" asp-route-key="@obj.Key">
@@ -13,6 +13,7 @@
                             <source src="https://moviescomp306.s3.ca-central-1.amazonaws.com/@obj.Key#t=0.1"/>
                         </video>
                     </a> 
+                    <div> <p>@Model.RatingsDict[obj.Key]</p></div>
                     <a href="/movie/delete/@obj.Key">Delete</a>
                 </div>
             }

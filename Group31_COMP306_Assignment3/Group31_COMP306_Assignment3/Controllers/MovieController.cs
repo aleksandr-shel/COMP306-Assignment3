@@ -23,7 +23,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         }
         public async Task<IActionResult> List()
         {
-            List<S3Object> list = new List<S3Object>();
+            MovieListViewModel movieListViewModel = new MovieListViewModel();
             ListObjectsV2Request request = new ListObjectsV2Request();
             request.BucketName = bucketName;
             ListObjectsV2Response response;
@@ -33,9 +33,22 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 request.ContinuationToken = response.NextContinuationToken;
             } while (response.IsTruncated);
-            response.S3Objects.ForEach(x => { list.Add(x); });
+            movieListViewModel.ListOfMovies = response.S3Objects;
+            Dictionary<string, double> ratings_dict = new Dictionary<string, double>();
+            foreach (var movieObj in movieListViewModel.ListOfMovies)
+            {
+                List<Rating> ratings = await dBOperations.GetMovieRatings(movieObj.Key);
+                double globalRating = 0;
+                foreach (var rating in ratings)
+                {
+                    globalRating += rating.Value;
+                }
+                globalRating /= ratings.Count;
+                ratings_dict.Add(movieObj.Key, globalRating);
+            }
+            movieListViewModel.RatingsDict = ratings_dict;
 
-            return View(list);
+            return View(movieListViewModel);
 
         }
 
