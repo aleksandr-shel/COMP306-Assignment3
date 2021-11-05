@@ -8,8 +8,10 @@ namespace Group31_COMP306_Assignment3.Models
 {
     public class MovieListViewModel
     {
-        public List<S3Object> ListOfMovies { get; set; }
+        public int UserId { get; set; }
+        public List<S3Object> ListOfMoviesObject { get; set; }
         public Dictionary<String, double> RatingsDict { get; set; }
 
+        public Dictionary<String, Movie> MoviesDict { get; set; }
     }
 }

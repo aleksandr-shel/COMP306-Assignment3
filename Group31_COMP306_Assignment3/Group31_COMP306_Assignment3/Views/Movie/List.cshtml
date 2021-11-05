@@ -5,7 +5,7 @@
     <a asp-action="UploadMovie" class="btn-outline-primary btn-sm" asp-controller="Movie">Upload a movie/video</a>
     <button class="btn-info" id="sortByRating"> Sort by Rating</button>
     <div class="movie-list-container">
-        @foreach(var obj in Model.ListOfMovies)
+        @foreach(var obj in Model.ListOfMoviesObject)
             {
                 <div class="grid-item">
                     <a asp-action="Page" asp-controller="Movie" asp-route-key="@obj.Key">
@@ -32,7 +32,9 @@
                         <input type="radio" id="star1 @obj.Key" name="rate @obj.Key" value="1" disabled/>
                         <label for="star1 @obj.Key" title="text">1 star</label>
                     </div>
-                    <a class="btn-outline-danger" href="/movie/delete/@obj.Key">Delete</a>
+                    @if (Model.UserId == Model.MoviesDict[obj.Key].UserId)
+                    { <a class="btn-outline-danger" href="/movie/delete?key=@obj.Key&userid=@Model.MoviesDict[obj.Key].UserId">Delete</a>}
+
                 </div>
             }
     </div>

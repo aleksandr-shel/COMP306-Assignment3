@@ -33,9 +33,9 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 request.ContinuationToken = response.NextContinuationToken;
             } while (response.IsTruncated);
-            movieListViewModel.ListOfMovies = response.S3Objects;
+            movieListViewModel.ListOfMoviesObject = response.S3Objects;
             Dictionary<string, double> ratings_dict = new Dictionary<string, double>();
-            foreach (var movieObj in movieListViewModel.ListOfMovies)
+            foreach (var movieObj in movieListViewModel.ListOfMoviesObject)
             {
                 List<Rating> ratings = await dBOperations.GetMovieRatings(movieObj.Key);
                 double globalRating = 0;
@@ -53,6 +53,9 @@ namespace Group31_COMP306_Assignment3.Controllers
                 }
             }
             movieListViewModel.RatingsDict = ratings_dict;
+            List<Movie> movies = await dBOperations.GetAllMovies();
+            movieListViewModel.MoviesDict = movies.ToDictionary(x => x.MovieTitle, x => x);
+            movieListViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
 
             return View(movieListViewModel);
         }
@@ -69,9 +72,9 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 request.ContinuationToken = response.NextContinuationToken;
             } while (response.IsTruncated);
-            movieListViewModel.ListOfMovies = response.S3Objects;
+            movieListViewModel.ListOfMoviesObject = response.S3Objects;
             Dictionary<string, double> ratings_dict = new Dictionary<string, double>();
-            foreach (var movieObj in movieListViewModel.ListOfMovies)
+            foreach (var movieObj in movieListViewModel.ListOfMoviesObject)
             {
                 List<Rating> ratings = await dBOperations.GetMovieRatings(movieObj.Key);
                 double globalRating = 0;
@@ -89,6 +92,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 movieListViewModel.RatingsDict = ratings_dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             }
+            movieListViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
 
             return movieListViewModel;
         }
@@ -97,7 +101,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         {
             List<Comment> comments = await dBOperations.GetMovieComments(key);
 
-            var movieObject = await dBOperations.GetMovie(key);
+            var movieObject = await dBOperations.GetMovies(key);
 
             var ratings = await dBOperations.GetMovieRatings(key);
 
@@ -125,7 +129,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 await uploadMovie.UploadFile.CopyToAsync(memoryStream);
 
-                string key = Path.GetFileName(uploadMovie.UploadFile.FileName);
+                string key = loggedUser?.Username + Path.GetFileName(uploadMovie.UploadFile.FileName);
 
                 //string movieTitle = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
 
@@ -147,22 +151,32 @@ namespace Group31_COMP306_Assignment3.Controllers
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
 
-        [Route("/movie/delete/{key}")]
-        public async Task<IActionResult> Delete(string key)
+
+        public async Task<IActionResult> Delete(string key, int userid)
         {
-            try
+            if (userid != 0)
             {
-                DeleteObjectRequest deleteRequest = new DeleteObjectRequest()
+                Movie movie = await dBOperations.GetMovie(key, userid);
+                if (loggedUser?.Id == movie?.UserId)
                 {
-                    BucketName = bucketName,
-                    Key = key
-                };
-                DeleteObjectResponse response = await s3Client.DeleteObjectAsync(deleteRequest);
+                    try
+                    {
+                        DeleteObjectRequest deleteRequest = new DeleteObjectRequest()
+                        {
+                            BucketName = bucketName,
+                            Key = key
+                        };
+                        DeleteObjectResponse response = await s3Client.DeleteObjectAsync(deleteRequest);
+                    }
+                    catch (AmazonS3Exception e)
+                    {
+                        return RedirectToAction(nameof(Error));
+                    }
+                    await dBOperations.DeleteMovie(key, movie.UserId);
+
+                }
             }
-            catch (AmazonS3Exception e)
-            {
-                return RedirectToAction(nameof(Error));
-            }
+
             return RedirectToAction(nameof(List));
         }
 

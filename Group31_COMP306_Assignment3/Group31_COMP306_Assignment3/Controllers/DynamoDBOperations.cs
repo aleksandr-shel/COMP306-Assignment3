@@ -216,7 +216,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             return comments;
         }
 
-        public async Task<List<Movie>> GetMovie(string movieTitle)
+        public async Task<List<Movie>> GetMovies(string movieTitle)
         {
             var search = context.FromQueryAsync<Movie>(new Amazon.DynamoDBv2.DocumentModel.QueryOperationConfig()
             {
@@ -226,6 +226,24 @@ namespace Group31_COMP306_Assignment3.Controllers
             var searchResponse = await search.GetRemainingAsync();
             List<Movie> movieObject = searchResponse.ToList();
             return movieObject;
+        }
+
+        public async Task<List<Movie>> GetAllMovies()
+        {
+            var conditions = new List<ScanCondition>();
+            // you can add scan conditions, or leave empty
+            var allMovies = await context.ScanAsync<Movie>(conditions).GetRemainingAsync();
+            return allMovies;
+        }
+
+        public async Task<Movie> GetMovie(string movieTitle, int userid)
+        {
+            return await context.LoadAsync<Movie>(movieTitle, userid);
+        }
+
+        public async Task DeleteMovie(string movieTitle, int userId)
+        {
+            await context.DeleteAsync<Movie>(movieTitle, userId);
         }
 
         public async Task<List<Rating>> GetMovieRatings(string movieTitle)

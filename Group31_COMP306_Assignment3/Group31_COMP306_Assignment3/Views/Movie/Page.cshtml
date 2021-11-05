@@ -60,8 +60,7 @@
             <br />
         </form>
     </div>
-
-    <a class="btn-outline-danger" href="/movie/delete/@Model.MovieTitle">Delete</a>
+    @if (Model.UserId==Model.MovieObject.UserId) { <a class="btn-outline-danger" href="/movie/delete?key=@Model.MovieTitle&userid=@Model.MovieObject.UserId">Delete</a> } 
     <br /><br />
 
 </div>
