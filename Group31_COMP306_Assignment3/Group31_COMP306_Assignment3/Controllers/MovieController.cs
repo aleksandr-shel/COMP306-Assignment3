@@ -57,6 +57,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             movieListViewModel.MoviesDict = movies.ToDictionary(x => x.MovieTitle, x => x);
             movieListViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
 
+            ViewData["username"] = loggedUser?.Username;
             return View(movieListViewModel);
         }
         [HttpGet]
@@ -110,13 +111,14 @@ namespace Group31_COMP306_Assignment3.Controllers
             MoviePageViewModel moviePageViewModel = new MoviePageViewModel(key, username, comments, movieObject[0], ratings);
             moviePageViewModel.UserId = loggedUser == null ? 0 : loggedUser.Id;
 
-
+            ViewData["username"] = loggedUser?.Username;
             return View("Page", moviePageViewModel);
         }
 
         public IActionResult UploadMovie()
         {
             ViewData["signedIn"] = signedIn;
+            ViewData["username"] = loggedUser?.Username;
             return View();
         }
 
@@ -124,6 +126,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         public async Task<IActionResult> UploadMovie(FileUploadForm uploadMovie)
         {
             ViewData["signedIn"] = signedIn;
+            ViewData["username"] = loggedUser?.Username;
 
             using (var memoryStream = new MemoryStream())
             {
@@ -148,6 +151,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             if(loggedUser?.Id == userId)
                 await dBOperations.CreateMovieDescription(movieTitle, userId, description, director);
 
+            ViewData["username"] = loggedUser?.Username;
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
 
@@ -176,7 +180,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 }
             }
-
+            ViewData["username"] = loggedUser?.Username;
             return RedirectToAction(nameof(List));
         }
 

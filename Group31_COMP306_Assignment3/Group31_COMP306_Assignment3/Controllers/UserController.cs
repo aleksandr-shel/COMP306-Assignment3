@@ -18,16 +18,18 @@ namespace Group31_COMP306_Assignment3.Controllers
         }
         public IActionResult Index()
         {
+            ViewData["username"] = loggedUser?.Username;
             return RedirectToAction(nameof(Index), "Home");
         }
         public IActionResult Registration()
         {
+            ViewData["username"] = loggedUser?.Username;
             return View();
         }
 
         public IActionResult Login()
         {
-
+            ViewData["username"] = loggedUser?.Username;
             return View();
         }
 
@@ -35,13 +37,14 @@ namespace Group31_COMP306_Assignment3.Controllers
         public IActionResult Login(string username, string password)
         {
             User userLoggedIn = _context.Users.FirstOrDefault(x => x.Username == username && x.Password == password);
-            
+
             if (userLoggedIn != null)
             {
                 signedIn = true;
                 loggedUser = userLoggedIn;
             }
-            
+
+            ViewData["username"] = loggedUser?.Username;
             return RedirectToAction(nameof(Index), "Home");
         }
 
@@ -49,6 +52,7 @@ namespace Group31_COMP306_Assignment3.Controllers
         {
             signedIn = false;
             loggedUser = null;
+            ViewData["username"] = loggedUser?.Username;
             return RedirectToAction(nameof(Index), "Home");
         }
 
@@ -60,8 +64,10 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 _context.Users.Add(user);
                 _context.SaveChanges();
-                return RedirectToAction(nameof(Index),"Home");
+                ViewData["username"] = loggedUser?.Username;
+                return RedirectToAction(nameof(Index), "Home");
             }
+            ViewData["username"] = loggedUser?.Username;
             return View();
         }
 

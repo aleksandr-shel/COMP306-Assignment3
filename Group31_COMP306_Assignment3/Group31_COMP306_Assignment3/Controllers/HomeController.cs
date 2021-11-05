@@ -27,6 +27,7 @@ namespace Group31_COMP306_Assignment3.Controllers
 
         public IActionResult Privacy()
         {
+            ViewData["username"] = loggedUser?.Username;
             return View();
         }
 

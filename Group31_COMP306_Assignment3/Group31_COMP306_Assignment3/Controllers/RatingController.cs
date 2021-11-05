@@ -16,6 +16,7 @@ namespace Group31_COMP306_Assignment3.Controllers
                 
                 await dBOperations.CreateRating(movieTitle, userId, rate);
             }
+            ViewData["username"] = loggedUser?.Username;
             return RedirectToAction("Page", "Movie", new { key = movieTitle });
         }
 
@@ -26,6 +27,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 return null;
             }
+            ViewData["username"] = loggedUser?.Username;
             return await dBOperations.GetRating(movieTitle, userId);
         }
     }
