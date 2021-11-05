@@ -15,9 +15,6 @@ namespace Group31_COMP306_Assignment3.Controllers
 
         public static async Task UploadFileAsync(Stream FileStream, string bucketName, string keyName)
         {
-            /*var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("AppSettings.json", optional: true, reloadOnChange: true);*/
-
             var credentials = new BasicAWSCredentials(accessKey, secretKey);
 
             using AmazonS3Client s3Client = new AmazonS3Client(credentials, bucketRegion);

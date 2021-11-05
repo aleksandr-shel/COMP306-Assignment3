@@ -132,7 +132,7 @@ namespace Group31_COMP306_Assignment3.Controllers
             {
                 await uploadMovie.UploadFile.CopyToAsync(memoryStream);
 
-                string key = loggedUser?.Username + Path.GetFileName(uploadMovie.UploadFile.FileName);
+                string key = loggedUser?.Username + " " + Path.GetFileName(uploadMovie.UploadFile.FileName);
 
                 //string movieTitle = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
 
