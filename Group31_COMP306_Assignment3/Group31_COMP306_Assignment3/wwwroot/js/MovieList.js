@@ -3,8 +3,7 @@
 
 (function () {
     const movieListContainer = document.querySelector('.movie-list-container'),
-        btnSort = document.querySelector('#sortByRating'),
-        gridItems = document.querySelectorAll('.grid-item');
+        btnSort = document.querySelector('#sortByRating');
     let order = "ascending";
 
 
@@ -24,24 +23,24 @@
                             <source src="https://moviescomp306.s3.ca-central-1.amazonaws.com/${key}#t=0.1">
                         </video>
                     </a>
-                    <div> <p> Rating: ${value.toFixed(2)}</p></div>
+                    <div> <p> Rating: ${ value != 0 ? value.toFixed(2) : ''}</p></div>
                     <div class="rate">
-                        
-                        <input type="radio" id="star5" name="rate" value="5" disabled/>
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" name="rate" value="4" disabled/>
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" name="rate" value="3" disabled/>
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" name="rate" value="2" disabled/>
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" name="rate" value="1" disabled/>
-                        <label for="star1" title="text">1 star</label>
+                        <input type="hidden" name="rating" value="${value.toFixed(0)}"/>
+                        <input type="radio" id="star5 ${key}" name="rate ${key}" value="5" disabled/>
+                        <label for="star5 ${key}" title="text">5 stars</label>
+                        <input type="radio" id="star4 ${key}" name="rate ${key}" value="4" disabled/>
+                        <label for="star4 ${key}" title="text">4 stars</label>
+                        <input type="radio" id="star3 ${key}" name="rate ${key}" value="3" disabled/>
+                        <label for="star3 ${key}" title="text">3 stars</label>
+                        <input type="radio" id="star2 ${key}" name="rate ${key}" value="2" disabled/>
+                        <label for="star2 ${key}" title="text">2 stars</label>
+                        <input type="radio" id="star1 ${key}" name="rate ${key}" value="1" disabled/>
+                        <label for="star1 ${key}" title="text">1 star</label>
                     </div>
                     <a class="btn-outline-danger" href="/movie/delete/${key}">Delete</a>
                 `;
                 movieListContainer.appendChild(div);
-                gridItems = document.querySelectorAll('.grid-item');
+                putStars();
             }
         });
         //res.then(data => {
@@ -64,18 +63,20 @@
         //    });
         //});
     })
-    console.log(gridItems);
-    gridItems.forEach(gridItem => {
-        const inputs = gridItem.querySelectorAll('.rate input[type="radio"]');
-        const rating = gridItem.querySelector('input[name="rating"]');
-        console.log(inputs);
-        inputs.forEach(input => {
-            if (input.value == rating.value) {
-                input.checked = true;
-            }
+    function putStars() {
+        gridItems = document.querySelectorAll('.grid-item');
+        gridItems.forEach(gridItem => {
+            const inputs = gridItem.querySelectorAll('.rate input[type="radio"]');
+            const rating = gridItem.querySelector('input[name="rating"]');
+            console.log(inputs);
+            inputs.forEach(input => {
+                if (input.value == rating.value) {
+                    input.checked = true;
+                }
+            })
         })
-    })
+    }
 
-
+    putStars();
 
 }) ()

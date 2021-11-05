@@ -21,15 +21,15 @@
 
           <div class="rate">
                         <input type="hidden" name="rating" value="@String.Format("{0:0}", Model.RatingsDict[obj.Key])"/>
-                        <input type="radio" id="star5 @obj.Key" name="rate @obj.Key" value="5"/>
+                        <input type="radio" id="star5 @obj.Key" name="rate @obj.Key" value="5" disabled/>
                         <label for="star5 @obj.Key" title="text">5 stars</label>
-                        <input type="radio" id="star4 @obj.Key" name="rate @obj.Key" value="4"/>
+                        <input type="radio" id="star4 @obj.Key" name="rate @obj.Key" value="4" disabled/>
                         <label for="star4 @obj.Key" title="text">4 stars</label>
-                        <input type="radio" id="star3 @obj.Key" name="rate @obj.Key" value="3"/>
+                        <input type="radio" id="star3 @obj.Key" name="rate @obj.Key" value="3" disabled/>
                         <label for="star3 @obj.Key" title="text">3 stars</label>
-                        <input type="radio" id="star2 @obj.Key" name="rate @obj.Key" value="2"/>
+                        <input type="radio" id="star2 @obj.Key" name="rate @obj.Key" value="2" disabled/>
                         <label for="star2 @obj.Key" title="text">2 stars</label>
-                        <input type="radio" id="star1 @obj.Key" name="rate @obj.Key" value="1"/>
+                        <input type="radio" id="star1 @obj.Key" name="rate @obj.Key" value="1" disabled/>
                         <label for="star1 @obj.Key" title="text">1 star</label>
                     </div>
                     <a class="btn-outline-danger" href="/movie/delete/@obj.Key">Delete</a>
