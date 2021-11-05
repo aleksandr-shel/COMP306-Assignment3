@@ -22,6 +22,11 @@ namespace Group31_COMP306_Assignment3.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        public User()
+        {
+
+        }
+
         public User(string username, string password)
         {
             Username = username;

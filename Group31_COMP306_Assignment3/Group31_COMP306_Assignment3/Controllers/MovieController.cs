@@ -46,7 +46,8 @@ namespace Group31_COMP306_Assignment3.Controllers
                 if (globalRating == 0)
                 {
                     ratings_dict.Add(movieObj.Key, 0);
-                } else
+                }
+                else
                 {
                     globalRating /= ratings.Count;
                     ratings_dict.Add(movieObj.Key, globalRating);
@@ -88,8 +89,9 @@ namespace Group31_COMP306_Assignment3.Controllers
             }
             if (order.Equals("ascending"))
             {
-                movieListViewModel.RatingsDict = ratings_dict.OrderBy(x => x.Value).ToDictionary(x=>x.Key, x=>x.Value);
-            } else
+                movieListViewModel.RatingsDict = ratings_dict.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            }
+            else
             {
                 movieListViewModel.RatingsDict = ratings_dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
             }
@@ -136,19 +138,34 @@ namespace Group31_COMP306_Assignment3.Controllers
 
                 //string movieTitle = Path.GetFileNameWithoutExtension(uploadMovie.UploadFile.FileName);
 
-                await S3Upload.UploadFileAsync(memoryStream, bucketName, key);
+                string movieExtension = Path.GetExtension(uploadMovie.UploadFile.FileName);
 
-                await dBOperations.CreateMovieDescription(key, loggedUser.Id, uploadMovie.Description, uploadMovie.Director);
+                if (movieExtension == ".mp4")
+                {
+                    var existingMovie = dBOperations.GetMovie(key, loggedUser.Id);
+
+                    if (existingMovie != null)
+                    {
+                        await dBOperations.DeleteMovieComments(key);
+                        await dBOperations.DeleteMovieRatings(key);
+                    }
+
+                    await S3Upload.UploadFileAsync(memoryStream, bucketName, key);
+
+                    await dBOperations.CreateMovieDescription(key, loggedUser.Id, uploadMovie.Description, uploadMovie.Director);
+
+                    return RedirectToAction("UploadMovie", "Movie");
+                }
             }
 
-            return View();
+            return RedirectToAction("UploadMovie", "Movie");
         }
 
 
         [HttpPost]
         public async Task<IActionResult> EditMovie(string movieTitle, int userId, string description, string director)
         {
-            if(loggedUser?.Id == userId)
+            if (loggedUser?.Id == userId)
                 await dBOperations.CreateMovieDescription(movieTitle, userId, description, director);
 
             ViewData["username"] = loggedUser?.Username;
