@@ -36,9 +36,17 @@
                         numberRatings++;
                     }
 
-                    globalRating /= numberRatings;
 
-                        <p>Global rating: @String.Format("{0:0.00}", globalRating)</p>
+
+                    if (globalRating != 0)
+                    {
+                        globalRating /= numberRatings;
+                        <p>@String.Format("{0:0.00}", globalRating)</p>
+                    }
+                    else
+                    {
+                        <p>@String.Format("{0:0.00}", 0)</p>
+                    }
                 }
             }
         </div>
